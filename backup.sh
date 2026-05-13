@@ -9,10 +9,12 @@ SOURCE="/var/www/html"
 
 mkdir -p "$DEST"
 
-# Run Backup
+# 3. Run Backup
 echo "Starting backup of web files..."
 
-#Wrap Variables
+# 4. Wrap Variables
 tar -czf "$DEST/web_backup_$TIME.tar.gz" "$SOURCE"
 
 echo "Backup completed successfully at $DEST"
+
+# 5. Updated for Git Lab
