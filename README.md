@@ -4,7 +4,7 @@
 This repository serves as a technical log of my transition into DevOps Engineering. It documents the deployment, security hardening, and automation of a Linux-based infrastructure.
 
 ## 🛠 Tech Stack
-* **OS:** Ubuntu 24.04 LTS (Headless)
+* **OS:** Ubuntu 26.04 LTS (Headless)
 * **Web Server:** Nginx
 * **Security:** UFW, SSH Hardening
 * **Version Control:** Git / GitHub
