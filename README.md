@@ -41,3 +41,32 @@ This repository serves as a technical log of my transition into DevOps Engineeri
 * `/scripts`: Automation utilities and maintenance scripts.
 * `/configs`: Hardened configuration files for Nginx and SSH.
 * `/documentation`: Technical write-ups and architectural diagrams.
+
+## 🌐 Day 4: Multi-Tenant Web Hosting & DNS Resolution
+
+### **The Essence**
+Modern DevOps involves hosting multiple services on shared infrastructure. The goal of this module was to implement **Nginx Server Blocks** to isolate traffic and manage local DNS resolution to bridge the Host-Guest network gap.
+
+### **Key Technical Tasks**
+* **Virtual Host Configuration:** Provisioned a new web root at `/var/www/oremax_lab/html` and architected an Nginx server block for `oremax.lab`.
+* **Layer 7 Name Resolution:** Manually modified the Windows `hosts` file to map the Ubuntu VM's internal IP to the `oremax.lab` domain, simulating a production DNS environment.
+* **Traffic Telemetry:** Utilized `tail -f /var/log/nginx/access.log` to monitor real-time HTTP request/response cycles (Status 200/404/500).
+
+### **Troubleshooting Log**
+* **Issue:** `oremax.lab` failed to resolve in the browser.
+* **Root Cause:** Incorrect mapping to the loopback address (127.0.0.1) in the Windows host file.
+* **Resolution:** Updated mapping to the actual VM Bridge IP identified via `ip addr`.
+
+## 🗄️ Day 5: Data Persistence & RDBMS Hardening
+
+### **The Essence**
+A server is the "brain," but the database is the "memory." This module focused on the **Data Tier**, ensuring that application information is stored securely and is decoupled from the web server logic.
+
+### **Key Technical Tasks**
+* **Instance Hardening:** Executed `mysql_secure_installation` to eliminate default security backdoors (anonymous users and test databases).
+* **Principle of Least Privilege:** Created a dedicated service user (`oremax_admin`) restricted exclusively to the `oremax_db` schema, preventing lateral movement in the event of a web-tier breach.
+* **CRUD Operations:** Designed a relational table structure (`projects`) and validated data integrity through SQL insertions and queries.
+
+### **Technical Verification**
+* Verified service persistence using `systemctl enable mysql` to ensure database availability upon system reboot.
+* Confirmed user-level isolation by verifying that `oremax_admin` cannot access system-level schemas.
