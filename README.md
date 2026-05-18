@@ -70,3 +70,16 @@ A server is the "brain," but the database is the "memory." This module focused o
 ### **Technical Verification**
 * Verified service persistence using `systemctl enable mysql` to ensure database availability upon system reboot.
 * Confirmed user-level isolation by verifying that `oremax_admin` cannot access system-level schemas.
+
+## 🚀 Day 6: Dynamic Application Runtimes & FastCGI Gateway
+
+### **The Essence**
+Web servers natively distribute flat, static assets. To facilitate business logic and database interactions for **Oremax Innovations**, the architecture must decouple traffic handling from execution environments using a high-performance process manager.
+
+### **Key Technical Tasks**
+* **Runtime Orchestration:** Provisioned and configured PHP-FPM on upstream Ubuntu 26.04 infrastructure.
+* **FastCGI Proxying:** Integrated Nginx location routing regex (`~ \.php$`) to capture application scripts and proxy them via Unix Domain Sockets.
+* **MIME/Execution Triage:** Diagnosed and corrected an uncompiled script delivery issue (browser download trap) by synchronizing Nginx backend handlers with the active PHP-FPM socket layer.
+
+### **Technical Verification**
+* Confirmed End-to-End processing: Browser requests dynamically invoke backend calculations, rendering real-time server timestamps on every page initialization.
