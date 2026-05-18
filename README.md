@@ -83,3 +83,16 @@ Web servers natively distribute flat, static assets. To facilitate business logi
 
 ### **Technical Verification**
 * Confirmed End-to-End processing: Browser requests dynamically invoke backend calculations, rendering real-time server timestamps on every page initialization.
+
+## 💾 Day 7: Database Consolidation & Dynamic Object Access (PDO)
+
+### **The Essence**
+An isolated application tier lacks utility without access to persistent enterprise records. This module centered on constructing a secure data access channel using PHP Data Objects (PDO) to query a relational backend securely.
+
+### **Key Technical Tasks**
+* **Schema Definition:** Architected a relational `services` schema inside the `oremax_db` database environment to support structured data entries.
+* **Data Layer Connection:** Established an abstraction layer connection string utilizing a native database driver protocol to communicate securely under the restricted `oremax_admin` role.
+* **Dynamic Iteration:** Implemented server-side logic loops to extract unparsed query tables and format them dynamically into readable elements for the Presentation Tier.
+
+### **Technical Verification**
+* Verified that updating database rows inside MySQL instantly alters the front-facing layout without requiring direct modifications to the web presentation files.
