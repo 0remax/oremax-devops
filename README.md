@@ -128,7 +128,7 @@ Automated configuration blueprints must execute predictably without manual inter
 * **Execution Wrapping:** Restructured execution strategies to utilize standard privilege delivery paths (`sudo ansible-playbook`), passing administrative authorization directly through the host kernel.
 
 ### **Technical Verification**
-* Verified state synchronization: Confirmed automated provisioning of system directories (/var/log/oremax_audit) and tracked files with custom read/write mode bits (0755/0644).
+* Verified state synchronization: Confirmed automated provisioning of system directories (`/var/log/oremax_audit) and tracked files with custom read/write mode bits (0755/0644`).
 
 ## 🤖 Module 10: Declarative Configuration Management (Ansible)
 
