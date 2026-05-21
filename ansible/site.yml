@@ -1,0 +1,23 @@
+---
+- name: Automate Oremax Web Infrastructure Core
+  hosts: local
+  become: true
+
+  tasks:
+    - name: Ensure Nginx is installed on the system
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Ensure Nginx service is started and enabled on boot
+      ansible.builtin.systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Deploy a custom automation health check page
+      ansible.builtin.copy:
+        content: "<h1>Oremax Automation Framework: Active</h1>"
+        dest: /var/www/html/index.nginx-debian.html
+        mode: '0644'

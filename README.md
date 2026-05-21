@@ -96,3 +96,51 @@ An isolated application tier lacks utility without access to persistent enterpri
 
 ### **Technical Verification**
 * Verified that updating database rows inside MySQL instantly alters the front-facing layout without requiring direct modifications to the web presentation files.
+
+---
+
+## 🤖 Day 8: Automation Engine Provisioning & Inventory Architecture
+
+### **The Essence**
+Manual system configuration (imperative administration) introduces human error and configuration drift across environments. This module initiated the transition to Infrastructure as Code (IaC) by establishing an isolated configuration management control tier using Ansible to govern host states.
+
+### **Key Technical Tasks**
+* **Engine Provisioning:** Depended on upstream APT package repositories to install and verify the Ansible runtime core natively on Ubuntu 26.04 infrastructure.
+* **Control Mapping:** Architected an environment inventory topology mapping (`inventory.ini`) utilizing the `ansible_connection=local` transport plugin to safely isolate management tasks to the native loopback address.
+* **Ad-Hoc Control Validation:** Executed low-level framework assertions via the `ping` system module to confirm execution stream readiness and Python runtime compatibility.
+
+### **Technical Verification**
+* Verified connection integrity: Received successful JSON status responses matching the exact system parameters:
+  ```json
+  localhost | SUCCESS => {
+      "changed": false,
+      "ping": "pong"
+  }
+
+📄 Day 9: Idempotent Blueprinting & Privilege Escalation Triage
+The Essence
+Automated configuration blueprints must execute predictably without manual interaction or unexpected permission blocks. This module focused on translating administrative tasks into structured, declarative templates using YAML syntax while resolving root security gates.
+
+Key Technical Tasks
+Declarative Tasks: Engineered a structured play (site.yml) utilizing strict indentation maps to handle state validation for core administrative logging zones.
+
+Privilege Pipeline Sorting: Diagnosed and corrected a non-interactive authentication failure (Premature end of stream waiting for become success) caused by interactive sudo prompts blocking background engine buffers.
+
+Execution Wrapping: Restructured execution strategies to utilize standard privilege delivery paths (sudo ansible-playbook), passing administrative authorization directly through the host kernel.
+
+Technical Verification
+Verified state synchronization: Confirmed automated provisioning of system directories (/var/log/oremax_audit) and tracked files with custom read/write mode bits (0755/0644).
+
+## 🤖 Module 10: Declarative Configuration Management (Ansible)
+
+### **The Essence**
+Manual configurations do not scale and introduce systemic configuration drift. This milestone focused on shifting from imperative administration to idempotent infrastructure automation utilizing the Ansible framework.
+
+### **Key Technical Tasks**
+* **Control Mapping:** Provisioned Ansible on Ubuntu 26.04 and drew an explicit local host environment inventory tree map.
+* **Privilege Pipeline Sorting:** Triaged and resolved a non-interactive privilege escalation bottleneck (`become` timeout) by wrapping the executor stream inside system root run states.
+* **Declarative Blueprinting:** Wrote and deployed a multi-stage YAML infrastructure playbook managing system apt caches, systemd unit definitions, and configuration template delivery.
+
+### **Technical Verification**
+* Verified system idempotence: Secondary playbook runs return a clean `changed=0` state payload.
+* Confirmed delivery of automated system health templates directly onto client-facing ports.
