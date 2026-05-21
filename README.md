@@ -116,15 +116,16 @@ Manual system configuration (imperative administration) introduces human error a
       "changed": false,
       "ping": "pong"
   }
+---
 
 ## 📄 Day 9: Idempotent Blueprinting & Privilege Escalation Triage
 ### **The Essence**
 Automated configuration blueprints must execute predictably without manual interaction or unexpected permission blocks. This module focused on translating administrative tasks into structured, declarative templates using YAML syntax while resolving root security gates.
 
 ### **Key Technical Tasks**
-* **Declarative Tasks:** Engineered a structured play (site.yml) utilizing strict indentation maps to handle state validation for core administrative logging zones.
+* **Declarative Tasks:** Engineered a structured play (`site.yml`) utilizing strict indentation maps to handle state validation for core administrative logging zones.
 * **Privilege Pipeline Sorting:** Diagnosed and corrected a non-interactive authentication failure (Premature end of stream waiting for become success) caused by interactive sudo prompts blocking background engine buffers.
-* **Execution Wrapping:** Restructured execution strategies to utilize standard privilege delivery paths (sudo ansible-playbook), passing administrative authorization directly through the host kernel.
+* **Execution Wrapping:** Restructured execution strategies to utilize standard privilege delivery paths (`sudo ansible-playbook`), passing administrative authorization directly through the host kernel.
 
 ### **Technical Verification**
 * Verified state synchronization: Confirmed automated provisioning of system directories (/var/log/oremax_audit) and tracked files with custom read/write mode bits (0755/0644).
