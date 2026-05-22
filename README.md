@@ -16,7 +16,7 @@ This repository serves as a technical log of my transition into DevOps Engineeri
 
 ### Day 1: Environment & Terminal Mastery
 * **Objective:** Provision a stable Linux environment and master CLI navigation.
-* **Key Tasks:** * Configured VirtualBox with Ubuntu 24.04.
+* **Key Tasks:** * Configured VirtualBox with Ubuntu 26.04.
   * Mastered absolute/relative paths and file permissions (`chmod`, `chown`).
   * Implemented log monitoring using `tail -f` and `grep` for real-time troubleshooting.
 
