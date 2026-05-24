@@ -1,23 +1,3 @@
-<div style="margin: 30px auto; max-width: 650px; font-family: system-ui, -apple-system, sans-serif;">
-    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); text-align: center;">
-        <h3 style="color: #0f172a; font-size: 1.25rem; font-weight: 600; margin-top: 0; margin-bottom: 20px;">
-            Hands-On DevOps Labs Validation
-        </h3>
-        <div style="display: inline-block; margin-bottom: 15px;">
-            <img src="https://googleusercontent.com/image_generation_content/0" 
-                 alt="Oremax Enterprise Agency Validated Badge" 
-                 style="max-width: 240px; height: auto; display: block;" />
-        </div>
-        <p style="color: #64748b; font-size: 0.875rem; margin: 12px 0 0 0; line-height: 1.5;">
-            Verified infrastructure frameworks and system lifecycle playbooks. 
-            <br>
-            <span style="color: #2563eb; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                ✓ Professional Verification Active
-            </span>
-        </p>
-    </div>
-</div>
-
 # Oremax Innovations: DevOps Engineering Lab
 ### Targeted Role: Junior DevOps / System Administrator
 
