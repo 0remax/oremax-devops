@@ -1,0 +1,17 @@
+server {
+    listen {{ web_port | default(80) }};
+    listen [::]:{{ web_port | default(80) }};
+
+    server_name {{ server_domain }};
+    root {{ web_root_dir }};
+
+    index index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Custom Logging Isolation
+    access_log /var/log/nginx/{{ server_domain }}_access.log;
+    error_log /var/log/nginx/{{ server_domain }}_error.log;
+}

@@ -6,6 +6,9 @@
   vars:
     deployment_title: "Oremax Innovations Lifecycle"
     environment_profile: "Staging-Labs"
+    # New Virtual Host Variables
+    server_domain: "labs.oremax.local"
+    web_root_dir: "/var/www/labs_oremax"
 
   tasks:
     - name: Ensure Nginx is installed on the system
@@ -14,14 +17,42 @@
         state: present
         update_cache: yes
 
+    - name: Ensure custom web root directory exists
+      ansible.builtin.file:
+        path: "{{ web_root_dir }}"
+        state: directory
+        mode: '0755'
+        owner: www-data
+        group: www-data
+
+    - name: Deploy dynamic infrastructure health page via Jinja2 Template
+      ansible.builtin.template:
+        src: templates/health_page.html.j2
+        dest: "{{ web_root_dir }}/index.html"
+        mode: '0644'
+
+    - name: Compile and deploy Nginx Server Block configuration
+      ansible.builtin.template:
+        src: templates/nginx_vhost.conf.j2
+        dest: "/etc/nginx/sites-available/{{ server_domain }}.conf"
+        mode: '0644'
+      notify: Reload Nginx Engine
+
+    - name: Enable the new server block via symbolic link
+      ansible.builtin.file:
+        src: "/etc/nginx/sites-available/{{ server_domain }}.conf"
+        dest: "/etc/nginx/sites-enabled/{{ server_domain }}.conf"
+        state: link
+      notify: Reload Nginx Engine
+
     - name: Ensure Nginx service is started and enabled on boot
       ansible.builtin.systemd:
         name: nginx
         state: started
         enabled: yes
 
-    - name: Deploy dynamic infrastructure health page via Jinja2 Template
-      ansible.builtin.template:
-        src: templates/health_page.html.j2
-        dest: /var/www/html/index.nginx-debian.html
-        mode: '0644'
+  handlers:
+    - name: Reload Nginx Engine
+      ansible.builtin.systemd:
+        name: nginx
+        state: reloaded
