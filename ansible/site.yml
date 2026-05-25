@@ -1,18 +1,27 @@
 ---
-- name: Automate Oremax Multi-Tenant Web Infrastructure
+- name: Automate Oremax Multi-Tenant Web & Database Infrastructure
   hosts: local
   become: true
 
   vars:
     deployment_title: "Oremax Innovations Lifecycle"
     environment_profile: "Staging-Labs"
-    # Define an array list of all your target development domains
+    # Web Tier Domains
     target_domains:
       - "labs.oremax.local"
       - "api.oremax.local"
       - "dev.oremax.local"
+    
+    # Database Tier Security Variables
+    db_root_password: "OremaxSecureRootPass2026!"
+    app_db_name: "oremax_staging_db"
+    app_db_user: "oremax_user"
+    app_db_password: "OremaxAppSecurePass2026!"
 
   tasks:
+    # ==========================================
+    # WEB TIER MODULES
+    # ==========================================
     - name: Ensure Nginx is installed on the system
       ansible.builtin.apt:
         name: nginx
@@ -60,8 +69,40 @@
         state: started
         enabled: yes
 
-  handlers:
-    - name: Reload Nginx Engine
+
+    # ==========================================
+    # DATABASE TIER MODULES
+    # ==========================================
+    - name: Ensure MySQL Server package is installed
+      ansible.builtin.apt:
+        name: mysql-server
+        state: present
+
+    - name: Ensure MySQL service is running and enabled on boot
       ansible.builtin.systemd:
-        name: nginx
-        state: reloaded
+        name: mysql
+        state: started
+        enabled: yes
+
+    - name: Remove all anonymous MySQL user accounts
+      mysql_user:
+        name: ""
+        host_all: true
+        state: absent
+
+    - name: Remove the default insecure MySQL test database
+      mysql_db:
+        name: test
+        state: absent
+
+    - name: Provision isolated application database
+      mysql_db:
+        name: "{{ app_db_name }}"
+        state: present
+
+    - name: Create dedicated application user and grant full DB access privileges natively
+      ansible.builtin.command: >
+        mysql -e "CREATE USER IF NOT EXISTS '{{ app_db_user }}'@'localhost' IDENTIFIED BY '{{ app_db_password }}';
+        GRANT ALL PRIVILEGES ON {{ app_db_name }}.* TO '{{ app_db_user }}'@'localhost';
+        FLUSH PRIVILEGES;"
+      changed_when: true
