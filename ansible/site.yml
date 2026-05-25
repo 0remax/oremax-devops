@@ -1,14 +1,16 @@
 ---
-- name: Automate Oremax Web Infrastructure Core
+- name: Automate Oremax Multi-Tenant Web Infrastructure
   hosts: local
   become: true
 
   vars:
     deployment_title: "Oremax Innovations Lifecycle"
     environment_profile: "Staging-Labs"
-    # New Virtual Host Variables
-    server_domain: "labs.oremax.local"
-    web_root_dir: "/var/www/labs_oremax"
+    # Define an array list of all your target development domains
+    target_domains:
+      - "labs.oremax.local"
+      - "api.oremax.local"
+      - "dev.oremax.local"
 
   tasks:
     - name: Ensure Nginx is installed on the system
@@ -17,32 +19,39 @@
         state: present
         update_cache: yes
 
-    - name: Ensure custom web root directory exists
+    - name: Ensure custom web root directories exist for all domains
       ansible.builtin.file:
-        path: "{{ web_root_dir }}"
+        path: "/var/www/{{ item }}"
         state: directory
         mode: '0755'
         owner: www-data
         group: www-data
+      loop: "{{ target_domains }}"
 
-    - name: Deploy dynamic infrastructure health page via Jinja2 Template
+    - name: Deploy dynamic infrastructure health pages via Jinja2 Template
       ansible.builtin.template:
         src: templates/health_page.html.j2
-        dest: "{{ web_root_dir }}/index.html"
+        dest: "/var/www/{{ item }}/index.html"
         mode: '0644'
+      loop: "{{ target_domains }}"
 
-    - name: Compile and deploy Nginx Server Block configuration
+    - name: Compile and deploy Nginx Server Block configurations
       ansible.builtin.template:
         src: templates/nginx_vhost.conf.j2
-        dest: "/etc/nginx/sites-available/{{ server_domain }}.conf"
+        dest: "/etc/nginx/sites-available/{{ item }}.conf"
         mode: '0644'
+      loop: "{{ target_domains }}"
+      vars:
+        server_domain: "{{ item }}"
+        web_root_dir: "/var/www/{{ item }}"
       notify: Reload Nginx Engine
 
-    - name: Enable the new server block via symbolic link
+    - name: Enable the new server blocks via symbolic links
       ansible.builtin.file:
-        src: "/etc/nginx/sites-available/{{ server_domain }}.conf"
-        dest: "/etc/nginx/sites-enabled/{{ server_domain }}.conf"
+        src: "/etc/nginx/sites-available/{{ item }}.conf"
+        dest: "/etc/nginx/sites-enabled/{{ item }}.conf"
         state: link
+      loop: "{{ target_domains }}"
       notify: Reload Nginx Engine
 
     - name: Ensure Nginx service is started and enabled on boot
