@@ -3,6 +3,10 @@
   hosts: local
   become: true
 
+  vars:
+    deployment_title: "Oremax Innovations Lifecycle"
+    environment_profile: "Staging-Labs"
+
   tasks:
     - name: Ensure Nginx is installed on the system
       ansible.builtin.apt:
@@ -16,8 +20,8 @@
         state: started
         enabled: yes
 
-    - name: Deploy a custom automation health check page
-      ansible.builtin.copy:
-        content: "<h1>Oremax Automation Framework: Active</h1>"
+    - name: Deploy dynamic infrastructure health page via Jinja2 Template
+      ansible.builtin.template:
+        src: templates/health_page.html.j2
         dest: /var/www/html/index.nginx-debian.html
         mode: '0644'

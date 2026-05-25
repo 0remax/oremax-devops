@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ deployment_title }}</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 40px; background-color: #f4f6f9; color: #333; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); max-width: 600px; margin: auto; }
+        h1 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .status { color: #2563eb; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>{{ deployment_title }} Hub</h1>
+        <p>Operational Profile: <strong>{{ environment_profile }}</strong></p>
+        <p>Automation Layer: <span class="status">ACTIVE</span></p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+        <p style="font-size: 0.85rem; color: #64748b;">
+            Provisioned automatically via Ansible on node: <strong>{{ ansible_facts['hostname'] }}</strong>
+        </p>
+    </div>
+</body>
+</html>
