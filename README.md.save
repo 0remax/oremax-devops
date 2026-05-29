@@ -211,7 +211,7 @@ Production infrastructure demands secure, isolated database layers that bypass d
   PLAY RECAP *******************************************************************************
   localhost                  : ok=13   changed=1    failed=0
 
-
+---
 ## 🗺️ Day 15: Full-Stack Infrastructure Mapping & Core Capstone Validation
 
 ### **The Essence**
@@ -225,9 +225,8 @@ An automated system is only as reliable as its visibility. This module serves as
 ### **Technical Verification**
 * Verified complete execution path integration by successfully testing web routing matrices alongside localized credential access validations.
 ---
-## 🚀 Infrastructure Pipeline Engine: Sprint Documentation (Days 16–26)
-
-This section documents the configuration, architecture, and real-world troubleshooting cycles encountered while implementing a secure, hybrid CI/CD system using **GitHub Actions** and a local **Self-Hosted Runner Node**.
+## Infrastructure Pipeline Engine: Sprint Documentation (Days 16–26)
+This section documents the configuration, architecture, and real-world troubleshooting cycles encountered while implementing a secure, hybrid CI/CD system using GitHub Actions and a local Self-Hosted Runner Node.
 
 ### **🏗️ Architecture Design & Flow**
 The control plane lives in the cloud via GitHub, while the execution plane runs natively within an isolated, on-premise virtual machine. This allows the pipeline to interact directly with internal infrastructure, local configuration management playbooks, and development environments without exposing internal endpoints to the public internet.
@@ -250,12 +249,42 @@ Stage 1: Syntax & Code Quality                         Stage 2: Infrastructure D
 
 ## 📅 Daily Engineering Log
 ### **📂 Days 16–22: Runner Provisioning & Core Setup**
+
 * **Objective:** Establish a dedicated local background execution runtime environment capable of parsing tasks directly from the GitHub Actions orchestrator.
+* **Implementation:**
+** Provisioned an isolated Ubuntu Linux guest node inside VirtualBox.
+
+** Downloaded, unpackaged, and configured the native GitHub Actions runner application suite binaries inside `~/oremax-capstones/week4/actions-runner`.
+
+** Generated secure short-lived registration tokens via repository administration settings to perform cryptographic handshakes, registering the local daemon under the custom target tag `self-hosted`.
+
+---
+
+### **🧪 Day 23: Establishing the Execution Daemon**
+* **Objective:** Bring the runner online to listen for live platform jobs.
+
+* **Implementation:** * Configured permissions and spun up the runner event listener engine (`./run.sh`).
+
+** Verified real-time heartbeats, confirming the agent status shifted to an active `Idle / Online` state within the GitHub management console.
+
+### **🧹 Day 24: Syntax Gates & Code Quality Validation**
+* **Objective:** Implement defensive testing gates to prevent broken or invalid configuration playbooks from ever merging into production states.
 
 * **Implementation:**
 
-**Provisioned an isolated Ubuntu Linux guest node inside VirtualBox.
+** Created the central pipeline orchestrator manifest file at `.github/workflows/verify-pipeline.yml`.
 
-**Downloaded, unpackaged, and configured the native GitHub Actions runner application suite binaries inside `~/oremax-capstones/week4/actions-runner`.
+** Defined the initial verification block `code_quality_lint` targeted to run exclusively on our `self-hosted` architecture pool.
 
-**Generated secure short-lived registration tokens via repository administration settings to perform cryptographic handshakes, registering the local daemon under the custom target tag `self-hosted`.
+** Configured automated environmental checks to silently install and run syntax checkers (`yamllint`, `ansible-lint`) over incoming code commits.
+
+### **🔄 Day 25: The Automated Deployment Loop**
+* **Objective:** Chain validation gates seamlessly into active execution sequences.
+
+* **Implementation:**
+
+**Appended a secondary tracking pipeline job named `deploy_infrastructure`.
+
+**Configured a strict structural dependency constraint rule (`needs: code_quality_lint) guaranteeing that the deployment routine will instantly abort if any formatting or syntax validation bugs are intercepted in Step 1.
+
+**Mapped native machine steps to capture the localized system environment variables and confirm binary version readiness (ansible --version).
