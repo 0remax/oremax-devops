@@ -254,8 +254,9 @@ Stage 1: Syntax & Code Quality                         Stage 2: Infrastructure D
 
 * **Implementation:**
 
-**Provisioned an isolated Ubuntu Linux guest node inside VirtualBox.
+  * Provisioned an isolated Ubuntu Linux guest node inside VirtualBox.
 
-**Downloaded, unpackaged, and configured the native GitHub Actions runner application suite binaries inside `~/oremax-capstones/week4/actions-runner`.
+  * Downloaded, unpackaged, and configured the native GitHub Actions runner application suite binaries inside `~/oremax-capstones/week4/actions-runner`.
 
-**Generated secure short-lived registration tokens via repository administration settings to perform cryptographic handshakes, registering the local daemon under the custom target tag `self-hosted`.
+  * Generated secure short-lived registration tokens via repository administration settings to perform cryptographic handshakes, registering the local daemon under the custom target tag `self-hosted`.
+
