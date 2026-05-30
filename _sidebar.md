@@ -9,3 +9,6 @@
 
 - **Network Monitoring & Metrics**
   - [Centralized Log Monitoring](log-analytics.md)
+
+- **Secure Pipeline**
+  - [Secure Pipeline Integration](secure-pipeline.md)
