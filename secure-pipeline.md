@@ -36,6 +36,8 @@ jobs:
         SERVER_SSH_KEY: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
       run: |
         echo "[+] Authenticating session and uploading production updates safely..."
+```
+---
 
 # Secure Pipeline Integration: GitHub Secrets & Runtime Injection
 
